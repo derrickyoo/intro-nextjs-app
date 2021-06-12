@@ -1,13 +1,7 @@
-const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
+const nextEnv = require('next-env')
+const dotenvLoad = require('dotenv-load');
 
-module.exports = (phase, { defaultConfig }) => {
-  if (phase === PHASE_DEVELOPMENT_SERVER) {
-    return {
-      /* development only config options here */
-    }
-  }
+dotenvLoad()
 
-  return {
-    /* config options for all phases except development here */
-  }
-}
+const withEnv = nextEnv()
+module.exports = withEnv()

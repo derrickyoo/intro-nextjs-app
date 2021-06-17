@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-const Page = () => {
+const Page = ({ notes }) => {
   const router = useRouter()
 
   return (
@@ -18,9 +18,23 @@ const Page = () => {
           Note 1
         </a>
       </Link>
+
+      {notes.map(note => (
+        <div>{ note.title }</div>
+      ))}
     </div>
   )
 }
 
-
 export default Page
+
+export async function getServerSideProps() {
+  const res = await fetch(`http://localhost:3000/api/notes/`)
+  const { data } = await res.json()
+
+  console.log(data);
+
+  return {
+    props: {notes: data}
+  }
+}
